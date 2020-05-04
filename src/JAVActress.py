@@ -2,12 +2,15 @@ import requests
 
 def LookupActress():
     url = 'https://jav-rest-api-htpvmrzjet.now.sh/api/actress?name='
-    actressName = input("Search for an actress: ")
-    actressURL = url + actressName
-    # print(actressURL)
-    actressRequest = requests.get(actressURL).json()
+    #update if null idol name
+    counts=0
+    while counts==0:
+        actressName = input("Search for an actress: ")
+        actressURL = url + actressName
+        # print(actressURL)
+        actressRequest = requests.get(actressURL).json()
 
-    counts = len(actressRequest['result'])
+        counts = len(actressRequest['result'])
     print("{:<3} | {:<7} | {:17} | {}\t".format("#", "ID", "Actress Name", "Japanese Name"))
     print("=======================================================")
 
@@ -21,10 +24,13 @@ def LookupActress():
 
 def LookUpMovies():
     video_url = 'https://jav-rest-api-htpvmrzjet.now.sh/api/videos/' 
-    actress_id = input("Enter actress ID: ")
-    vidURL = video_url + actress_id
-    videoRequest = requests.get(vidURL).json()
-    video_counts = len(videoRequest['result'])
+    video_counts =0
+    #update if null idol id or idol have no video
+    while video_counts==0:
+        actress_id = input("Enter actress ID: ")
+        vidURL = video_url + actress_id
+        videoRequest = requests.get(vidURL).json()
+        video_counts = len(videoRequest['result'])
     actress_name = videoRequest['result'][0]['actress'][0]['name']
     print("{:<3} | {} | {}\t| {:<15} | {}".format("#", "Year", "Name", "Code", "Title"))
     print("=============================================================================")
